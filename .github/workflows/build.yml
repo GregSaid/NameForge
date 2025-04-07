@@ -50,12 +50,14 @@ jobs:
 
   build-linux-x86:
     runs-on: ubuntu-latest
-    container: i386/ubuntu
     steps:
       - uses: actions/checkout@v3
-      - run: apt update && apt install -y python3 python3-pip
-      - run: pip3 install pyinstaller
-      - run: pyinstaller --onefile 7Miner.py
+      - uses: docker/setup-qemu-action@v2
+      - run: |
+          docker run --rm --platform linux/386 \
+            -v ${{ github.workspace }}:/app \
+            -w /app i386/python:3.11 \
+            /bin/sh -c "apt update && apt install -y binutils && pip install pyinstaller && pyinstaller --onefile 7Miner.py"
       - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-linux-x86
@@ -70,7 +72,7 @@ jobs:
           docker run --rm --platform linux/arm64 \
             -v ${{ github.workspace }}:/app \
             -w /app arm64v8/python:3.11-slim \
-            /bin/sh -c "pip install pyinstaller && pyinstaller --onefile 7Miner.py"
+            /bin/sh -c "apt update && apt install -y binutils && pip install pyinstaller && pyinstaller --onefile 7Miner.py"
       - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-linux-arm64
