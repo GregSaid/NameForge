@@ -2,36 +2,38 @@ name: Build 7Miner
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main", "principal" ] # mude conforme o nome da sua branch principal
   workflow_dispatch:
 
 jobs:
   build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Instalar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt pyinstaller
+          pip install pyinstaller
 
-      - name: Build executable
+      - name: Construir com PyInstaller
         run: |
           pyinstaller --onefile 7Miner.py
+        shell: bash
 
-      - name: Upload executables
+      - name: Upload do artefato
         uses: actions/upload-artifact@v3
         with:
-          name: 7Miner-${{ matrix.os }}
-          path: dist/*
+          name: 7Miner-${{ runner.os }}
+          path: dist/7Miner*
