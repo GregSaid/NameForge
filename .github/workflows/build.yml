@@ -1,42 +1,89 @@
-name: Build 7Miner
-
-permissions:
-  contents: read
+name: Build 7Miner multiplataforma
 
 on:
   push:
-    branches: [ "principal", "main" ]
+    branches: [main, principal]
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
+  build-windows:
+    name: Windows Build (x64)
+    runs-on: windows-latest
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-
-      - name: Configurar Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.10'
+      - run: pip install pyinstaller -r requirements.txt
+      - run: pyinstaller 7Miner.py --onefile --name 7Miner
+      - run: mkdir dist-final && mv dist/7Miner.exe dist-final/7Miner-windows-x64.exe
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 7Miner-windows-x64
+          path: dist-final/*
 
-      - name: Instalar dependências
+  build-linux:
+    name: Linux Build (x64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pyinstaller -r requirements.txt
+      - run: pyinstaller 7Miner.py --onefile --name 7Miner
+      - run: mkdir dist-final && mv dist/7Miner dist-final/7Miner-linux-x64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 7Miner-linux-x64
+          path: dist-final/*
+
+  build-mac:
+    name: macOS Build (x64)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pyinstaller -r requirements.txt
+      - run: pyinstaller 7Miner.py --onefile --name 7Miner
+      - run: mkdir dist-final && mv dist/7Miner dist-final/7Miner-macos-x64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 7Miner-macos-x64
+          path: dist-final/*
+
+  build-linux-arm:
+    name: Linux ARM Build (via cross-compilation)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar dependências do cross-build
         run: |
-          python -m pip install --upgrade pip
+          sudo apt update
+          sudo apt install -y python3-pyinstaller
           pip install pyinstaller
-
-      - name: Build com PyInstaller
-        run: |
-          pyinstaller 7Miner.py --onefile --name 7Miner
-
-      - name: Upload do executável
-        uses: actions/upload-artifact@v4
+      - run: pyinstaller 7Miner.py --onefile --name 7Miner
+      - run: mkdir dist-final && mv dist/7Miner dist-final/7Miner-linux-arm
+      - uses: actions/upload-artifact@v3
         with:
-          name: 7Miner-${{ matrix.os }}
-          path: |
-            dist/7Miner*
+          name: 7Miner-linux-arm
+          path: dist-final/*
+
+  build-mac-arm64:
+    name: macOS ARM64 (Apple Silicon)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: |
+          pip install pyinstaller -r requirements.txt
+          pyinstaller 7Miner.py --onefile --name 7Miner
+          mkdir dist-final && mv dist/7Miner dist-final/7Miner-macos-arm64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 7Miner-macos-arm64
+          path: dist-final/*
