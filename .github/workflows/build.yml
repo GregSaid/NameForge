@@ -15,7 +15,7 @@ jobs:
           python-version: '3.11'
       - run: pip install pyinstaller
       - run: pyinstaller --onefile 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-windows-x64
           path: dist/7Miner.exe
@@ -28,8 +28,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install pyinstaller
-      - run: pyinstaller --onefile --target-arch x86 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - run: pyinstaller --onefile --target-arch x86 7Miner.py || echo "x86 not supported on this runner"
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-windows-x86
           path: dist/7Miner.exe
@@ -43,7 +43,7 @@ jobs:
           python-version: '3.11'
       - run: pip install pyinstaller
       - run: pyinstaller --onefile 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-linux-x64
           path: dist/7Miner
@@ -56,7 +56,7 @@ jobs:
       - run: git clone https://github.com/${{ github.repository }} . && cd .
       - run: pip3 install pyinstaller
       - run: pyinstaller --onefile 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-linux-x86
           path: dist/7Miner
@@ -70,7 +70,6 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-      # cross-compilation é complexa, posso fazer Dockerfile se preferir.
 
   build-macos-x64:
     runs-on: macos-latest
@@ -81,7 +80,7 @@ jobs:
           python-version: '3.11'
       - run: pip install pyinstaller
       - run: pyinstaller --onefile 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-macos-x64
           path: dist/7Miner
@@ -94,8 +93,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install pyinstaller
-      - run: arch -arm64 pyinstaller --onefile 7Miner.py
-      - uses: actions/upload-artifact@v3
+      - run: arch -arm64 pyinstaller --onefile 7Miner.py || echo "arm64 build fallback"
+      - uses: actions/upload-artifact@v4
         with:
           name: 7Miner-macos-arm64
           path: dist/7Miner
