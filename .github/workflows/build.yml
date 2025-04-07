@@ -1,5 +1,8 @@
 name: Build 7Miner
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ "principal", "main" ]
@@ -32,7 +35,7 @@ jobs:
           pyinstaller 7Miner.py --onefile --name 7Miner
 
       - name: Upload do executável
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: 7Miner-${{ matrix.os }}
           path: |
