@@ -1,7 +1,7 @@
-# 🟢 7Miner - Minecraft Username Checker
-[![Releases](https://img.shields.io/github/v/release/GregSaid/7Miner?label=latest%20release)](https://github.com/GregSaid/7Miner/releases)
+# 🟢 NameForge - Minecraft Username Checker
+[![Releases](https://img.shields.io/github/v/release/GregSaid/NameForge?label=latest%20release)](https://github.com/GregSaid/NameForge/releases)
 
-**7Miner** is an advanced and automated tool developed in Python that checks the availability of Minecraft usernames. It allows for efficient, anonymous (via proxies), and even real-time queries, with Discord integration for automatic alerts.
+**NameForge** is an advanced and automated tool developed in Python that checks the availability of Minecraft usernames. It allows for efficient, anonymous (via proxies), and even real-time queries, with Discord integration for automatic alerts.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## 📦 About the Project
 
-7Miner was created to make it easier to search for unique and rare Minecraft usernames. Whether to reclaim a nostalgic name, grab a common word, or create something aesthetic, 7Miner makes the process simple and efficient. No need to check one by one anymore!
+NameForge was created to make it easier to search for unique and rare Minecraft usernames. Whether to reclaim a nostalgic name, grab a common word, or create something aesthetic, NameForge makes the process simple and efficient. No need to check one by one anymore!
 
 - ✔️ Uses proxies for anonymity and to avoid rate-limits.  
 - ✔️ Supports automatic name generation or custom name lists.  
@@ -47,16 +47,16 @@
 
 1. **Clone the repository**:
 
-   ```bash
-   git clone https://github.com/your-username/7Miner.git
-   cd 7Miner
-   ```
+```bash
+git clone https://github.com/your-username/NameForge.git
+cd NameForge
+```
 
 2. **Install the required libraries**:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
@@ -70,9 +70,9 @@
 
 ## 💡 How to Use
 
-### 1. Open the file '7Miner.py' / '7Miner.exe'
+### 1. Open the file 'NameForge.py' / 'NameForge.exe'
 
-#### 1.1 How to open the '7Miner.**py**' file?
+#### 1.1 How to open the 'NameForge.**py**' file?
 ![1](https://media.discordapp.net/attachments/1358169758658334821/1358628021808009246/image.png?ex=67f48872&is=67f336f2&hm=cec2489662cf669f2e3c65c7902da56d34af4cd227f079e46606defa1abb0eba&=&format=webp&quality=lossless)
 
 ![2](https://media.discordapp.net/attachments/1358169758658334821/1358628379565494494/image.png?ex=67f488c7&is=67f33747&hm=a3786c1f90b654ba97d7b1935177cf3437bd7ad2bad4a63109247ae271ffe584&=&format=webp&quality=lossless)
@@ -83,10 +83,10 @@
 
 ![5](https://media.discordapp.net/attachments/1358169758658334821/1358630587778207886/image.png?ex=67f48ad6&is=67f33956&hm=6f3376e272fa2622360c973b5555c445b2acb46df9b4a4e4e9ac87b31af58259&=&format=webp&quality=lossless)
 
-#### 1.2 How to open the '7Miner.**exe**' file?
+#### 1.2 How to open the 'NameForge.**exe**' file?
 - A: Just double-click the `.exe` file.
 
-#### 1.3 After running the '7Miner.py' or '7Miner.exe' file for the first time, important folders and files will be created.
+#### 1.3 After running the 'NameForge.py' or 'NameForge.exe' file for the first time, important folders and files will be created.
 - ![Files/Folders](https://media.discordapp.net/attachments/1358169758658334821/1358636955113357363/68747470733a2f2f6d656469612e646973636f72646170702e6e65742f6174746163686d656e74732f313335383136393735383635383333343832312f313335383633343836313133323531373536362f696d6167652e706e673f65783d3637663438656431266973_1.png?ex=67f490c4&is=67f33f44&hm=a16d6f879fde02d5b79ba875feb84d5a6d859219dd57686bb0b9f9ae1a997390&=&format=webp&quality=lossless)
 
 ### 2. How to use 'names.txt'?
