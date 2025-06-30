@@ -1,0 +1,114 @@
+
+name: Build NameForge
+
+on:
+  push:
+    branches: [ "main", "principal" ]
+  workflow_dispatch:
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller
+      - run: |
+          if (Test-Path "Pickaxe.ico") {
+            pyinstaller --onefile --icon=Pickaxe.ico NameForge.py
+          } else {
+            pyinstaller --onefile NameForge.py
+          }
+        shell: powershell
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-windows-x64
+          path: dist/NameForge.exe
+
+  build-windows-x86:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller
+      - run: |
+          if (Test-Path "Pickaxe.ico") {
+            pyinstaller --onefile --icon=Pickaxe.ico --target-arch x86 NameForge.py
+          } else {
+            pyinstaller --onefile --target-arch x86 NameForge.py
+          }
+        shell: powershell
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-windows-x86
+          path: dist/NameForge.exe
+
+  build-linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller
+      - run: pyinstaller --onefile NameForge.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-linux-x64
+          path: dist/NameForge
+
+  build-linux-x86:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-qemu-action@v2
+      - run: |
+          docker run --rm --platform linux/386             -v ${{ github.workspace }}:/app             -w /app i386/python:3.11             /bin/sh -c "apt update && apt install -y binutils && pip install pyinstaller && pyinstaller --onefile NameForge.py"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-linux-x86
+          path: dist/NameForge
+
+  build-linux-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-qemu-action@v2
+      - run: |
+          docker run --rm --platform linux/arm64             -v ${{ github.workspace }}:/app             -w /app arm64v8/python:3.11-slim             /bin/sh -c "apt update && apt install -y binutils && pip install pyinstaller && pyinstaller --onefile NameForge.py"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-linux-arm64
+          path: dist/NameForge
+
+  build-macos-x64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller
+      - run: pyinstaller --onefile NameForge.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-macos-x64
+          path: dist/NameForge
+
+  build-macos-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller
+      - run: arch -arm64 pyinstaller --onefile NameForge.py || echo "arm64 build fallback"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NameForge-macos-arm64
+          path: dist/NameForge

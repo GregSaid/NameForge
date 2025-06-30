@@ -1,0 +1,10 @@
+debug/
+__pycache__/
+dist/
+build/
+*.exe
+*.wav
+webhook.txt
+names.txt
+proxies.txt
+claimed/
