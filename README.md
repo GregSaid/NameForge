@@ -62,7 +62,7 @@ pip install -r requirements.txt
 
 ## ⚙️ Requirements
 
-- Python 3.9 or higher  
+- Latest Python  
 - Internet connection  
 - Optional: `proxies.txt` file for increased anonymity
 

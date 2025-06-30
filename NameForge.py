@@ -131,7 +131,7 @@ def create_readme():
 
         ## ⚙️ Requirements
 
-        - Python 3.9 or higher  
+        - Latest Python  
         - Internet connection  
         - Optional: `proxies.txt` file for increased anonymity
 
